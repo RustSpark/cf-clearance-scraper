@@ -1,3 +1,4 @@
+const logger = require( '../log' );
 async function findAcceptLanguage(page) {
     await page.setBypassCSP(true)
     return await page.evaluate(async () => {
@@ -46,6 +47,7 @@ function getSource({ url, proxy }) {
             page.on('response', async (res) => {
                 try {
                     if ([200, 302].includes(res.status()) && [url, url + '/'].includes(res.url())) {
+                        logger.info("===========>")
                         await page.waitForNavigation({ waitUntil: 'load', timeout: 5000 }).catch(() => { });
                         const cookies = await page.cookies()
                         let headers = await res.request().headers()

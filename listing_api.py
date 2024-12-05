@@ -36,6 +36,7 @@ cf = requests.post(
     headers={
         "Content-Type": "application/json",
     },
+    timeout=120
 )
 print(cf.text)
 result = cf.json()
