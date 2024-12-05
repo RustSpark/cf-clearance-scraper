@@ -37,7 +37,6 @@ function getSource({url, proxy}) {
                 try {
                     if (proxy) {
                         logger.info(proxy)
-                        logger.info(request.url())
                         await proxyRequest({
                             page,
                             proxyUrl: `http://${proxy.username ? `${proxy.username}:${proxy.password}@` : ""}${proxy.host}:${proxy.port}`,
@@ -51,8 +50,7 @@ function getSource({url, proxy}) {
             });
             page.on('response', async (res) => {
                 try {
-                    logger.info(`${JSON.stringify(res, null, 2)}`);
-                    await page.screenshot({path: `/images/${Date.now()}.png`, fullPage: true});
+                    logger.info(`${res.url()} :------> ${res.status()}`);
                     if ([200, 302].includes(res.status()) && [url, url + '/'].includes(res.url())) {
                         logger.info("===========>")
                         await page.waitForNavigation({waitUntil: 'load', timeout: 5000}).catch(() => {
