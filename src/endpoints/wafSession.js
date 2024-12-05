@@ -1,5 +1,7 @@
 const logger = require('../log');
-
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 async function findAcceptLanguage(page) {
     await page.setBypassCSP(true)
     return await page.evaluate(async () => {
@@ -77,6 +79,10 @@ function getSource({url, proxy}) {
                 waitUntil: 'domcontentloaded',
                 timeout: 60000
             })
+
+            // 暂停 3 分钟
+            await sleep(180000); // 180000 毫秒 = 3 分钟
+            logger.info('Paused for 3 minutes.');
         } catch (e) {
             logger.error(e)
             if (!isResolved) {
