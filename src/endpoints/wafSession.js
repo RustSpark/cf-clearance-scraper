@@ -1,4 +1,5 @@
-const logger = require( '../log' );
+const logger = require('../log');
+
 async function findAcceptLanguage(page) {
     await page.setBypassCSP(true)
     return await page.evaluate(async () => {
@@ -10,7 +11,7 @@ async function findAcceptLanguage(page) {
     })
 }
 
-function getSource({ url, proxy }) {
+function getSource({url, proxy}) {
     return new Promise(async (resolve, reject) => {
 
         if (!url) return reject('Missing url parameter')
@@ -19,7 +20,7 @@ function getSource({ url, proxy }) {
 
         let isResolved = false
 
-        const { proxyRequest } = await import('puppeteer-proxy')
+        const {proxyRequest} = await import('puppeteer-proxy')
 
         var cl = setTimeout(async () => {
             if (!isResolved) {
@@ -35,6 +36,7 @@ function getSource({ url, proxy }) {
             page.on('request', async (request) => {
                 try {
                     if (proxy) {
+                        logger.info(proxy)
                         await proxyRequest({
                             page,
                             proxyUrl: `http://${proxy.username ? `${proxy.username}:${proxy.password}@` : ""}${proxy.host}:${proxy.port}`,
@@ -43,15 +45,17 @@ function getSource({ url, proxy }) {
                     } else {
                         request.continue()
                     }
-                } catch (e) { }
+                } catch (e) {
+                }
             });
             page.on('response', async (res) => {
                 try {
                     logger.info(`${JSON.stringify(res, null, 2)}`);
-                    await page.screenshot({ path: `/images/${Date.now()}.png`, fullPage: true });
+                    await page.screenshot({path: `/images/${Date.now()}.png`, fullPage: true});
                     if ([200, 302].includes(res.status()) && [url, url + '/'].includes(res.url())) {
                         logger.info("===========>")
-                        await page.waitForNavigation({ waitUntil: 'load', timeout: 5000 }).catch(() => { });
+                        await page.waitForNavigation({waitUntil: 'load', timeout: 5000}).catch(() => {
+                        });
                         const cookies = await page.cookies()
                         let headers = await res.request().headers()
                         delete headers['content-type']
@@ -62,9 +66,10 @@ function getSource({ url, proxy }) {
                         await context.close()
                         isResolved = true
                         clearInterval(cl)
-                        resolve({ cookies, headers })
+                        resolve({cookies, headers})
                     }
-                } catch (e) { }
+                } catch (e) {
+                }
             })
 
 
@@ -82,4 +87,5 @@ function getSource({ url, proxy }) {
 
     })
 }
+
 module.exports = getSource
