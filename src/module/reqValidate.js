@@ -33,7 +33,7 @@ const schema = {
             "type": "string"
         }
     },
-    "required": ["mode", "url", "authToken", "proxy"],
+    "required": ["mode", "url", "authToken"],
     "additionalProperties": false
 }
 
