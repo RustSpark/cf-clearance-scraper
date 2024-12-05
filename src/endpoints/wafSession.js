@@ -68,12 +68,13 @@ function getSource({url, proxy}) {
                         resolve({cookies, headers})
                     }
                 } catch (e) {
+                    logger.error(e)
                 }
             })
 
 
             await page.goto(url, {
-                waitUntil: 'domcontentloaded',
+                waitUntil: 'load',
                 timeout: 60000
             })
         } catch (e) {
