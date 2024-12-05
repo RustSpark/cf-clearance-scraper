@@ -30,6 +30,7 @@ function getSource({ url, proxy }) {
 
         try {
             const page = await context.newPage();
+            logger.info(">>>>>>>>>")
             await page.setRequestInterception(true);
             page.on('request', async (request) => {
                 try {
