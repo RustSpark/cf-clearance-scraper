@@ -37,6 +37,7 @@ function getSource({url, proxy}) {
                 try {
                     if (proxy) {
                         logger.info(proxy)
+                        logger.info(request.url())
                         await proxyRequest({
                             page,
                             proxyUrl: `http://${proxy.username ? `${proxy.username}:${proxy.password}@` : ""}${proxy.host}:${proxy.port}`,
