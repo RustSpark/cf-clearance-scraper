@@ -48,6 +48,7 @@ function getSource({ url, proxy }) {
             page.on('response', async (res) => {
                 try {
                     logger.info(`${JSON.stringify(res, null, 2)}`);
+                    await page.screenshot({ path: `/images/${Date.now()}.png`, fullPage: true });
                     if ([200, 302].includes(res.status()) && [url, url + '/'].includes(res.url())) {
                         logger.info("===========>")
                         await page.waitForNavigation({ waitUntil: 'load', timeout: 5000 }).catch(() => { });
