@@ -15,7 +15,6 @@ async function createBrowser() {
         })
 
         // console.log('Browser launched');
-
         global.browser = browser;
 
         browser.on('disconnected', async () => {
