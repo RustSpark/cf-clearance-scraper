@@ -57,7 +57,6 @@ app.post('/scraper', async (req, res) => {
             result = await solveTurnstileMax(data).then(res => { return { token: res, code: 200 } }).catch(err => { return { code: 500, message: err.message } })
             break;
         case "cloudflare":
-            logger.info("start")
             result = await wafSession(data).then(res => { return { ...res, code: 200 } }).catch(err => { return { code: 500, message: err.message } })
             break;
     }
