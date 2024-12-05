@@ -9,7 +9,8 @@ const schema = {
     "properties": {
         "mode": {
             "type": "string",
-            "enum": ["source", "turnstile-min", "turnstile-max", "waf-session"],
+            // "enum": ["source", "turnstile-min", "turnstile-max", "cloudflare"],
+            "enum": ["cloudflare"],
         },
         "proxy": {
             "type": "object",
@@ -32,7 +33,7 @@ const schema = {
             "type": "string"
         }
     },
-    "required": ["mode", "url"],
+    "required": ["mode", "url", "authToken", "proxy"],
     "additionalProperties": false
 }
 
