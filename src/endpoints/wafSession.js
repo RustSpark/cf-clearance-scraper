@@ -48,6 +48,7 @@ function getSource({url, proxy}) {
                         request.continue()
                     }
                 } catch (e) {
+                    logger.error(`>>>>>>>>>>>>>>> ${e}`)
                 }
             });
             page.on('response', async (res) => {
