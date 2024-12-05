@@ -78,6 +78,7 @@ function getSource({url, proxy}) {
                 timeout: 60000
             })
         } catch (e) {
+            logger.error(e)
             if (!isResolved) {
                 await context.close()
                 clearInterval(cl)
