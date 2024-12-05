@@ -74,7 +74,7 @@ function getSource({url, proxy}) {
 
 
             await page.goto(url, {
-                waitUntil: 'load',
+                waitUntil: 'domcontentloaded',
                 timeout: 60000
             })
         } catch (e) {
