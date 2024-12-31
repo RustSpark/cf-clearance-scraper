@@ -1,4 +1,3 @@
-const logger = require('../log');
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -33,12 +32,10 @@ function getSource({url, proxy}) {
 
         try {
             const page = await context.newPage();
-            logger.info(">>>>>>>>>")
             await page.setRequestInterception(true);
             page.on('request', async (request) => {
                 try {
                     if (proxy) {
-                        logger.info(proxy)
                         await proxyRequest({
                             page,
                             proxyUrl: `http://${proxy.username ? `${proxy.username}:${proxy.password}@` : ""}${proxy.host}:${proxy.port}`,
@@ -48,14 +45,11 @@ function getSource({url, proxy}) {
                         request.continue()
                     }
                 } catch (e) {
-                    logger.error(`>>>>>>>>>>>>>>> ${e}`)
                 }
             });
             page.on('response', async (res) => {
                 try {
-                    logger.info(`${res.url()} :------> ${res.status()}`);
                     if ([200, 302].includes(res.status()) && [url, url + '/'].includes(res.url())) {
-                        logger.info("===========>")
                         await page.waitForNavigation({waitUntil: 'load', timeout: 5000}).catch(() => {
                         });
                         const cookies = await page.cookies()
@@ -71,7 +65,6 @@ function getSource({url, proxy}) {
                         resolve({cookies, headers})
                     }
                 } catch (e) {
-                    logger.error(e)
                 }
             })
 
@@ -81,7 +74,6 @@ function getSource({url, proxy}) {
             })
 
         } catch (e) {
-            logger.error(e)
             if (!isResolved) {
                 await context.close()
                 clearInterval(cl)

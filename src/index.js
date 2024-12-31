@@ -25,8 +25,6 @@ const getSource = require('./endpoints/getSource')
 const solveTurnstileMin = require('./endpoints/solveTurnstile.min')
 const solveTurnstileMax = require('./endpoints/solveTurnstile.max')
 const wafSession = require('./endpoints/wafSession')
-const logger = require('./log')
-
 
 app.post('/scraper', async (req, res) => {
 
