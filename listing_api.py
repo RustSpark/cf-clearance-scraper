@@ -16,20 +16,14 @@ def generate_random_string(length=15):
     return random_string
 
 
-username = (
-    f"customer-c57e38"
-    f"-session-{generate_random_string(random.randint(7, 16))}-time-5"
-)
+
 cf = requests.post(
     "http://localhost:3000/scraper",
     json={
         "url": "https://listing-api.openloot.com/v2/market/rentals?page=2&q=Resounding&sort=price:asc&priceTo=500",
         "mode": "cloudflare",
         "proxy": {
-            "host": "proxy.ipipgo.com",
-            "port": 31212,
-            "username": username,
-            "password": "59d34be9",
+
         },
         "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2VjMGUxNWY1ZjQ3MWIyMmVhMjlmNyIsIm5iZiI6MTczMjc2MzM1NSwidXNlcm5hbWUiOiJhZG1pbiJ9.M9ZqSRUIXTafnkqgI40zh8Ig77ARetgveDYKpqfD_wQ",
     },
