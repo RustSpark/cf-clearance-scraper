@@ -40,13 +40,8 @@ def run_sync(num: int):
     response = curl_requests.get(
         f"https://listing-api.openloot.com/v2/market/rentals?page={num}&q=Resounding&sort=price:asc&priceTo=500",
         headers=result["headers"],
-        # proxies={
-        #     "http": "http://customer-mgos239040-session-ujyj2iaxfqo1myp-time-5:my6fvem7@proxy.goproxy.com:30000",
-        #     "https": "http://customer-mgos239040-session-ujyj2iaxfqo1myp-time-5:my6fvem7@proxy.goproxy.com:30000",
-        # },
         cookies={item["name"]: item["value"] for item in result["cookies"]},
     )
-    #    logger.debug(response.json())
     print(response.json())
 
 
